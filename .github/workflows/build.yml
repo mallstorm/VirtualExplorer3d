@@ -30,6 +30,33 @@ jobs:
             mv /tmp/godot_templates/templates ~/.local/share/godot/export_templates/4.3.stable
           fi
 
+      - name: Setup Android export settings
+        run: |
+          JAVA_SDK_PATH="${JAVA_HOME:-}"
+          if [ -z "$JAVA_SDK_PATH" ] || [ ! -d "$JAVA_SDK_PATH" ]; then
+            JAVA_SDK_PATH="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"
+          fi
+          keytool -genkeypair -v \
+            -keystore debug.keystore \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+          mkdir -p ~/.config/godot
+          cat > ~/.config/godot/editor_settings-4.tres <<EOF
+          [gd_resource type="EditorSettings" format=3]
+
+          [resource]
+          export/android/android_sdk_path = "$ANDROID_HOME"
+          export/android/java_sdk_path = "$JAVA_SDK_PATH"
+          export/android/debug_keystore = "debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          EOF
+
       - name: Import project
         run: godot --headless --path . --import
 
