@@ -14,9 +14,13 @@ Virtual Explorer - validation report
 - Фоновый звук создан: `Projects/Chernobyl/audio/reactor_room_ambience.wav`.
 - GitHub Actions workflow добавлен: `.github/workflows/build.yml`.
 - Godot export presets добавлены: `export_presets.cfg`.
+- Версия проекта обновлена до `0.4-demo`.
+- Сцена `Projects/Chernobyl/scenes/reactor_room.tscn` заменена на первую игровую демо-карту.
+- Добавлен procedural builder: `Projects/Chernobyl/scenes/chernobyl_demo_builder.gd`.
+- В демо-карте есть пять зон: входной тоннель, центральный зал, реакторный блок, пультовая, технический коридор.
+- Android HUD использует невидимые touch-зоны вместо видимых джойстиков.
 
 Ограничение проверки:
 
 - В текущей среде нет Godot CLI (`godot`/`godot4` не найден), поэтому локальный запуск сцены и экспорт APK/EXE не выполнялись.
 - Экспорт должен выполняться через GitHub Actions после загрузки проекта в репозиторий.
-
