@@ -19,6 +19,10 @@ Virtual Explorer - validation report
 - Добавлен procedural builder: `Projects/Chernobyl/scenes/chernobyl_demo_builder.gd`.
 - В демо-карте есть пять зон: входной тоннель, центральный зал, реакторный блок, пультовая, технический коридор.
 - Android HUD использует невидимые touch-зоны вместо видимых джойстиков.
+- Версия проекта обновлена до `0.5-visual-demo`.
+- В procedural builder добавлен VisualDetail слой: маркировка пола, таблички, загрязнения стен, панели, кабели, индикаторы, haze-слой.
+- Добавлены интерактивные точки `collapsed_beam` и `emergency_exit`.
+- Добавлен `WorldEnvironment` для тёмного фона и ambient-света.
 
 Ограничение проверки:
 

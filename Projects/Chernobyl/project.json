@@ -1,7 +1,7 @@
 {
   "id": "chernobyl",
   "name": "Chernobyl Sarcophagus Experience",
-  "version": "0.4-demo",
+  "version": "0.5-visual-demo",
   "engine": "Virtual Explorer",
   "type": "hybrid",
   "start_scene": "reactor_block",
@@ -68,6 +68,20 @@
           "id": "technical_corridor",
           "name": "Технический коридор",
           "description": "Служебный проход с кабельными трассами",
+          "audio": "res://Projects/Chernobyl/audio/reactor_panel.wav",
+          "interaction": "info"
+        },
+        {
+          "id": "collapsed_beam",
+          "name": "Повреждённая балка",
+          "description": "Фрагмент условной конструкции саркофага",
+          "audio": "res://Projects/Chernobyl/audio/reactor_panel.wav",
+          "interaction": "info"
+        },
+        {
+          "id": "emergency_exit",
+          "name": "Аварийная дверь",
+          "description": "Маркер будущего перехода в отдельную сцену технического коридора",
           "audio": "res://Projects/Chernobyl/audio/reactor_panel.wav",
           "interaction": "info"
         }

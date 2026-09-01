@@ -12,14 +12,21 @@ var mat_pipe: StandardMaterial3D
 var mat_hazard: StandardMaterial3D
 var mat_blue: StandardMaterial3D
 var mat_sign: StandardMaterial3D
+var mat_marking_white: StandardMaterial3D
+var mat_marking_red: StandardMaterial3D
+var mat_stain: StandardMaterial3D
+var mat_dust: StandardMaterial3D
+var mat_exit_green: StandardMaterial3D
 
 func _ready() -> void:
 	_create_materials()
 	_build_static_level()
 	_build_equipment()
+	_build_visual_detail()
 	_build_interactive_points()
 	_build_navigation()
 	_build_lighting()
+	_build_atmosphere()
 
 func _create_materials() -> void:
 	mat_floor = _mat(Color(0.24, 0.26, 0.25, 1.0), 1.0, 0.0)
@@ -31,12 +38,19 @@ func _create_materials() -> void:
 	mat_hazard = _mat(Color(0.95, 0.68, 0.12, 1.0), 0.75, 0.0)
 	mat_blue = _mat(Color(0.08, 0.38, 1.0, 0.72), 0.3, 0.0, Color(0.08, 0.38, 1.0, 1.0), 1.8)
 	mat_sign = _mat(Color(0.03, 0.04, 0.04, 1.0), 0.65, 0.0)
+	mat_marking_white = _mat(Color(0.72, 0.76, 0.73, 0.86), 0.9, 0.0)
+	mat_marking_red = _mat(Color(0.62, 0.06, 0.04, 0.9), 0.82, 0.0)
+	mat_stain = _mat(Color(0.04, 0.045, 0.04, 0.55), 1.0, 0.0)
+	mat_dust = _mat(Color(0.82, 0.76, 0.62, 0.28), 1.0, 0.0)
+	mat_exit_green = _mat(Color(0.05, 0.55, 0.24, 0.9), 0.65, 0.0, Color(0.04, 0.45, 0.2, 1.0), 0.7)
 
 func _mat(color: Color, roughness: float, metallic: float, emission: Color = Color(0.0, 0.0, 0.0, 1.0), emission_energy: float = 0.0) -> StandardMaterial3D:
 	var material := StandardMaterial3D.new()
 	material.albedo_color = color
 	material.roughness = roughness
 	material.metallic = metallic
+	if color.a < 1.0:
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	if emission_energy > 0.0:
 		material.emission_enabled = true
 		material.emission = emission
@@ -121,6 +135,82 @@ func _build_equipment() -> void:
 	_add_box(root, "CorridorCableRack", Vector3(8.9, 1.65, -2.1), Vector3(0.35, 2.0, 8.4), mat_metal)
 	_add_box(root, "EmergencyDoor", Vector3(8.4, 1.2, -7.68), Vector3(2.4, 2.4, 0.12), mat_hazard)
 
+func _build_visual_detail() -> void:
+	var root := Node3D.new()
+	root.name = "VisualDetail"
+	add_child(root)
+	_build_floor_markings(root)
+	_build_wall_signs(root)
+	_build_wall_damage(root)
+	_build_control_room_details(root)
+	_build_corridor_cables(root)
+	_build_dust_markers(root)
+
+func _build_floor_markings(root: Node3D) -> void:
+	for z in [15.0, 12.8, 10.6, 7.6, 4.8, 1.8, -1.0, -3.8, -6.4]:
+		_add_visual_box(root, "CenterLine", Vector3(0.0, 0.125, z), Vector3(0.12, 0.025, 1.1), mat_marking_white)
+	_add_visual_box(root, "ReactorWarningLineA", Vector3(-3.4, 0.13, -5.8), Vector3(0.14, 0.025, 4.4), mat_hazard)
+	_add_visual_box(root, "ReactorWarningLineB", Vector3(3.4, 0.13, -5.8), Vector3(0.14, 0.025, 4.4), mat_hazard)
+	_add_visual_box(root, "ControlRoomLine", Vector3(-8.1, 0.13, -2.1), Vector3(3.1, 0.025, 0.14), mat_marking_red)
+	_add_hazard_stripes(root, Vector3(8.4, 0.15, -7.0), 5, 0.0)
+
+func _build_wall_signs(root: Node3D) -> void:
+	_add_wall_label(root, "SIGN A-01 / ВХОД", Vector3(0.0, 2.4, 17.88), Vector3(0.0, 180.0, 0.0), Color(0.85, 0.9, 0.82, 1.0))
+	_add_wall_label(root, "ЦЕНТРАЛЬНЫЙ ЗАЛ", Vector3(-5.22, 2.15, 4.0), Vector3(0.0, 90.0, 0.0), Color(0.82, 0.86, 0.78, 1.0))
+	_add_wall_label(root, "РЕАКТОРНЫЙ БЛОК N4", Vector3(0.0, 2.6, -9.18), Vector3(0.0, 0.0, 0.0), Color(1.0, 0.74, 0.28, 1.0))
+	_add_wall_label(root, "ПУЛЬТОВАЯ", Vector3(-13.78, 2.15, -2.2), Vector3(0.0, 90.0, 0.0), Color(0.78, 0.88, 1.0, 1.0))
+	_add_wall_label(root, "ТЕХНИЧЕСКИЙ КОРИДОР", Vector3(10.38, 2.12, -1.6), Vector3(0.0, -90.0, 0.0), Color(0.82, 0.86, 0.78, 1.0))
+	_add_visual_box(root, "ExitSign", Vector3(8.4, 2.62, -7.52), Vector3(1.7, 0.12, 0.42), mat_exit_green)
+	_add_wall_label(root, "EXIT", Vector3(8.4, 2.65, -7.44), Vector3(0.0, 0.0, 0.0), Color(0.8, 1.0, 0.86, 1.0), 0.026)
+
+func _build_wall_damage(root: Node3D) -> void:
+	_add_visual_box(root, "WallStainEntranceA", Vector3(-1.66, 2.25, 12.0), Vector3(0.035, 1.2, 2.1), mat_stain)
+	_add_visual_box(root, "WallStainEntranceB", Vector3(1.66, 1.45, 14.8), Vector3(0.035, 0.9, 1.6), mat_stain)
+	_add_visual_box(root, "WallStainHallA", Vector3(-5.2, 2.35, 1.5), Vector3(0.035, 1.0, 2.4), mat_stain)
+	_add_visual_box(root, "WallStainHallB", Vector3(5.2, 2.1, 5.6), Vector3(0.035, 1.2, 1.8), mat_stain)
+	_add_visual_box(root, "WallStainReactor", Vector3(0.8, 2.4, -9.17), Vector3(2.6, 1.1, 0.035), mat_stain)
+	_add_visual_box(root, "WallStainControl", Vector3(-13.78, 1.55, -3.2), Vector3(0.035, 0.8, 2.0), mat_stain)
+	for x in [-4.6, -2.0, 2.0, 4.5]:
+		_add_visual_box(root, "ReactorWallPanel", Vector3(x, 1.25, -9.15), Vector3(1.1, 1.2, 0.06), mat_dark)
+
+func _build_control_room_details(root: Node3D) -> void:
+	for i in range(6):
+		var x := -12.45 + float(i) * 0.78
+		_add_visual_box(root, "IndicatorBlue%d" % i, Vector3(x, 1.52, -2.72), Vector3(0.22, 0.04, 0.16), mat_blue)
+	for i in range(4):
+		var x := -12.1 + float(i) * 0.9
+		_add_visual_box(root, "PanelSlot%d" % i, Vector3(x, 1.42, -2.34), Vector3(0.52, 0.04, 0.08), mat_dark)
+	_add_wall_label(root, "RBMK CONTROL NODE", Vector3(-10.5, 1.78, -2.88), Vector3(-18.0, 0.0, 0.0), Color(0.72, 0.9, 1.0, 1.0), 0.018)
+
+func _build_corridor_cables(root: Node3D) -> void:
+	for i in range(5):
+		var y := 0.9 + float(i) * 0.32
+		_add_visual_box(root, "CableLine%d" % i, Vector3(8.68, y, -2.1), Vector3(0.08, 0.05, 8.1), mat_pipe)
+	for z in [-5.6, -3.6, -1.6, 0.4, 2.4]:
+		_add_visual_box(root, "CableClamp", Vector3(8.62, 1.55, z), Vector3(0.16, 1.5, 0.08), mat_rust)
+
+func _build_dust_markers(root: Node3D) -> void:
+	for i in range(20):
+		var x := -5.0 + float((i * 37) % 100) / 10.0
+		var z := -7.2 + float((i * 19) % 210) / 10.0
+		var y := 1.0 + float((i * 11) % 20) / 10.0
+		_add_visual_box(root, "DustMote%d" % i, Vector3(x, y, z), Vector3(0.035, 0.035, 0.035), mat_dust)
+
+func _add_hazard_stripes(root: Node3D, position: Vector3, count: int, rotation_y: float) -> void:
+	for i in range(count):
+		var stripe := _add_visual_box(root, "HazardStripe%d" % i, position + Vector3(float(i) * 0.42 - 0.84, 0.0, 0.0), Vector3(0.24, 0.025, 1.15), mat_hazard)
+		stripe.rotation_degrees.y = rotation_y + 28.0
+
+func _add_wall_label(root: Node3D, text: String, position: Vector3, rotation: Vector3, color: Color, pixel_size: float = 0.022) -> void:
+	var label := Label3D.new()
+	label.name = "WallLabel"
+	label.text = text
+	label.position = position
+	label.rotation_degrees = rotation
+	label.pixel_size = pixel_size
+	label.modulate = color
+	root.add_child(label)
+
 func _build_interactive_points() -> void:
 	_add_interactable(
 		"reactor_panel",
@@ -153,6 +243,22 @@ func _build_interactive_points() -> void:
 		Vector3(8.65, 1.1, -2.0),
 		Vector3(0.75, 1.3, 1.4),
 		mat_metal
+	)
+	_add_interactable(
+		"collapsed_beam",
+		"Повреждённая балка",
+		"Фрагмент условной конструкции саркофага. Такие детали нужны для ощущения масштаба и разрушенного промышленного пространства.",
+		Vector3(-1.8, 1.65, -2.8),
+		Vector3(0.55, 0.55, 1.4),
+		mat_rust
+	)
+	_add_interactable(
+		"emergency_exit",
+		"Аварийная дверь",
+		"Маркер будущего перехода в отдельную сцену технического коридора. В этой версии дверь работает как точка осмотра.",
+		Vector3(8.4, 1.2, -7.45),
+		Vector3(1.7, 1.6, 0.2),
+		mat_exit_green
 	)
 
 func _add_interactable(object_id: String, title: String, description: String, position: Vector3, size: Vector3, material: Material) -> void:
@@ -242,6 +348,25 @@ func _build_lighting() -> void:
 		light.light_energy = 1.45
 		light.omni_range = 7.5
 		add_child(light)
+
+func _build_atmosphere() -> void:
+	var world := WorldEnvironment.new()
+	world.name = "DemoWorldEnvironment"
+	var environment := Environment.new()
+	environment.background_mode = Environment.BG_COLOR
+	environment.background_color = Color(0.025, 0.028, 0.026, 1.0)
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	environment.ambient_light_color = Color(0.22, 0.24, 0.22, 1.0)
+	environment.ambient_light_energy = 0.22
+	world.environment = environment
+	add_child(world)
+
+	var haze_root := Node3D.new()
+	haze_root.name = "HazeSheets"
+	add_child(haze_root)
+	_add_visual_box(haze_root, "CentralDustHaze", Vector3(0.0, 2.7, 1.0), Vector3(9.8, 0.04, 8.0), mat_dust)
+	_add_visual_box(haze_root, "ReactorDustHaze", Vector3(0.0, 3.0, -5.8), Vector3(10.2, 0.04, 6.4), mat_dust)
+	_add_visual_box(haze_root, "TunnelDustHaze", Vector3(0.0, 2.45, 13.2), Vector3(3.0, 0.04, 7.0), mat_dust)
 
 func _add_box(parent: Node3D, node_name: String, position: Vector3, size: Vector3, material: Material, rotation_degrees: Vector3 = Vector3.ZERO) -> StaticBody3D:
 	var body := StaticBody3D.new()
