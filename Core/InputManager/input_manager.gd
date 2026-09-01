@@ -13,13 +13,11 @@ const ACTION_KEYS := {
 
 var touch_move := Vector2.ZERO
 var touch_look := Vector2.ZERO
+var touch_interact_requested := false
 var gyro_enabled := false
 
 func _ready() -> void:
 	_register_default_actions()
-
-func _process(_delta: float) -> void:
-	touch_look = Vector2.ZERO
 
 func _register_default_actions() -> void:
 	for action in ACTION_KEYS.keys():
@@ -46,13 +44,23 @@ func get_move_vector() -> Vector2:
 func set_touch_move(value: Vector2) -> void:
 	touch_move = value.limit_length(1.0)
 
+func set_touch_look(value: Vector2) -> void:
+	touch_look = value.limit_length(1.0)
+
 func add_touch_look(value: Vector2) -> void:
 	touch_look += value
 
-func consume_touch_look() -> Vector2:
-	var value := touch_look
-	touch_look = Vector2.ZERO
-	return value
+func get_touch_look() -> Vector2:
+	return touch_look.limit_length(1.0)
+
+func request_touch_interact() -> void:
+	touch_interact_requested = true
+
+func consume_touch_interact() -> bool:
+	if not touch_interact_requested:
+		return false
+	touch_interact_requested = false
+	return true
 
 func set_gyro_enabled(value: bool) -> void:
 	gyro_enabled = value
@@ -61,4 +69,3 @@ func get_gyro_rotation() -> Vector3:
 	if gyro_enabled:
 		return Input.get_gyroscope()
 	return Vector3.ZERO
-

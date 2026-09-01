@@ -4,17 +4,22 @@ extends CanvasLayer
 @onready var info_panel: PanelContainer = $Root/InformationPanel
 @onready var info_title: Label = $Root/InformationPanel/Margin/VBox/Title
 @onready var info_body: Label = $Root/InformationPanel/Margin/VBox/Body
-@onready var joystick: Control = $Root/TouchJoystick
+@onready var left_joystick: Control = $Root/LeftMoveJoystick
+@onready var right_joystick: Control = $Root/RightLookJoystick
+@onready var action_button: Button = $Root/ActionButton
 
 var player: Node = null
 
 func _ready() -> void:
 	info_panel.visible = false
+	action_button.pressed.connect(_on_action_pressed)
 	_connect_player.call_deferred()
 
 func _process(_delta: float) -> void:
 	if OS.get_name() != "Android":
-		joystick.visible = false
+		left_joystick.visible = false
+		right_joystick.visible = false
+		action_button.visible = false
 
 func _connect_player() -> void:
 	player = get_tree().get_first_node_in_group("player")
@@ -30,8 +35,10 @@ func _connect_player() -> void:
 func _on_focus_changed(data: Dictionary) -> void:
 	if data.is_empty():
 		hint_label.text = ""
+		action_button.disabled = true
 		return
-	hint_label.text = "%s  [E]" % data.get("name", "Объект")
+	hint_label.text = "%s" % data.get("name", "Объект")
+	action_button.disabled = false
 
 func _on_interaction_requested(data: Dictionary) -> void:
 	info_title.text = data.get("name", "Информация")
@@ -43,3 +50,6 @@ func _on_interaction_requested(data: Dictionary) -> void:
 
 func _on_close_pressed() -> void:
 	info_panel.visible = false
+
+func _on_action_pressed() -> void:
+	InputManager.request_touch_interact()

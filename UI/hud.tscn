@@ -1,7 +1,61 @@
-[gd_scene load_steps=4 format=3 uid="uid://virtual_explorer_hud"]
+[gd_scene load_steps=10 format=3 uid="uid://virtual_explorer_hud"]
 
 [ext_resource type="Script" path="res://UI/hud.gd" id="1_hud"]
 [ext_resource type="Script" path="res://UI/touch_joystick.gd" id="2_joystick"]
+
+[sub_resource type="StyleBoxFlat" id="style_pad_base"]
+bg_color = Color(0.05, 0.06, 0.07, 0.42)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.78, 0.95, 0.22)
+corner_radius_top_left = 96
+corner_radius_top_right = 96
+corner_radius_bottom_right = 96
+corner_radius_bottom_left = 96
+
+[sub_resource type="StyleBoxFlat" id="style_move_knob"]
+bg_color = Color(0.78, 0.88, 0.98, 0.72)
+corner_radius_top_left = 34
+corner_radius_top_right = 34
+corner_radius_bottom_right = 34
+corner_radius_bottom_left = 34
+
+[sub_resource type="StyleBoxFlat" id="style_look_knob"]
+bg_color = Color(0.3, 0.58, 1, 0.78)
+corner_radius_top_left = 34
+corner_radius_top_right = 34
+corner_radius_bottom_right = 34
+corner_radius_bottom_left = 34
+
+[sub_resource type="StyleBoxFlat" id="style_action"]
+bg_color = Color(0.1, 0.42, 1, 0.82)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="style_action_pressed"]
+bg_color = Color(0.05, 0.28, 0.7, 0.9)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="style_action_disabled"]
+bg_color = Color(0.15, 0.16, 0.18, 0.45)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="style_panel"]
+bg_color = Color(0.03, 0.035, 0.04, 0.88)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -14,45 +68,123 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TopHint" type="Label" parent="Root"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 18.0
+offset_right = 300.0
+offset_bottom = 54.0
+theme_override_font_sizes/font_size = 18
+text = "Левый шар - движение, правый шар - обзор 360"
+horizontal_alignment = 1
+
+[node name="CenterReticle" type="Panel" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+theme_override_styles/panel = SubResource("style_action")
+
 [node name="Hint" type="Label" parent="Root"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.9
+anchor_top = 0.84
 anchor_right = 0.5
-anchor_bottom = 0.9
-offset_left = -220.0
-offset_top = -20.0
-offset_right = 220.0
-offset_bottom = 20.0
+anchor_bottom = 0.84
+offset_left = -260.0
+offset_top = -18.0
+offset_right = 260.0
+offset_bottom = 18.0
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 22
 
-[node name="TouchJoystick" type="Control" parent="Root"]
+[node name="LeftMoveJoystick" type="Control" parent="Root"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
-offset_left = 36.0
-offset_top = -208.0
-offset_right = 208.0
-offset_bottom = -36.0
+offset_left = 48.0
+offset_top = -214.0
+offset_right = 220.0
+offset_bottom = -42.0
 script = ExtResource("2_joystick")
+control_mode = "move"
+radius = 72.0
 
-[node name="Base" type="ColorRect" parent="Root/TouchJoystick"]
+[node name="Base" type="Panel" parent="Root/LeftMoveJoystick"]
+mouse_filter = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.1, 0.12, 0.14, 0.35)
+theme_override_styles/panel = SubResource("style_pad_base")
 
-[node name="Knob" type="ColorRect" parent="Root/TouchJoystick"]
+[node name="Knob" type="Panel" parent="Root/LeftMoveJoystick"]
+mouse_filter = 2
 layout_mode = 0
-offset_right = 54.0
-offset_bottom = 54.0
-color = Color(0.8, 0.9, 1, 0.55)
+offset_right = 62.0
+offset_bottom = 62.0
+theme_override_styles/panel = SubResource("style_move_knob")
+
+[node name="RightLookJoystick" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -214.0
+offset_right = -48.0
+offset_bottom = -42.0
+script = ExtResource("2_joystick")
+control_mode = "look"
+radius = 72.0
+
+[node name="Base" type="Panel" parent="Root/RightLookJoystick"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("style_pad_base")
+
+[node name="Knob" type="Panel" parent="Root/RightLookJoystick"]
+mouse_filter = 2
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 62.0
+theme_override_styles/panel = SubResource("style_look_knob")
+
+[node name="ActionButton" type="Button" parent="Root"]
+disabled = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -208.0
+offset_top = -286.0
+offset_right = -60.0
+offset_bottom = -236.0
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("style_action")
+theme_override_styles/pressed = SubResource("style_action_pressed")
+theme_override_styles/disabled = SubResource("style_action_disabled")
+text = "Действие"
 
 [node name="InformationPanel" type="PanelContainer" parent="Root"]
 visible = false
@@ -62,16 +194,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -120.0
-offset_right = 280.0
-offset_bottom = 120.0
+offset_left = -310.0
+offset_top = -125.0
+offset_right = 310.0
+offset_bottom = 125.0
+theme_override_styles/panel = SubResource("style_panel")
 
 [node name="Margin" type="MarginContainer" parent="Root/InformationPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 18
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 18
+theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 16
 
 [node name="VBox" type="VBoxContainer" parent="Root/InformationPanel/Margin"]
@@ -87,7 +220,7 @@ autowrap_mode = 3
 
 [node name="Close" type="Button" parent="Root/InformationPanel/Margin/VBox"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Закрыть"
 
 [connection signal="pressed" from="Root/InformationPanel/Margin/VBox/Close" to="." method="_on_close_pressed"]
-

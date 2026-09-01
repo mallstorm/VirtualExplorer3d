@@ -24,7 +24,7 @@ VRCardboard="*res://Renderer/VR/vr_cardboard_controller.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/handheld/orientation=1
+window/handheld/orientation=4
 
 [input_devices]
 
