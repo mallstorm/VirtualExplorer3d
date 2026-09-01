@@ -4,8 +4,7 @@ extends CanvasLayer
 @onready var info_panel: PanelContainer = $Root/InformationPanel
 @onready var info_title: Label = $Root/InformationPanel/Margin/VBox/Title
 @onready var info_body: Label = $Root/InformationPanel/Margin/VBox/Body
-@onready var left_joystick: Control = $Root/LeftMoveJoystick
-@onready var right_joystick: Control = $Root/RightLookJoystick
+@onready var touch_controls: Control = $Root/TouchScreenControls
 @onready var action_button: Button = $Root/ActionButton
 
 var player: Node = null
@@ -17,8 +16,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if OS.get_name() != "Android":
-		left_joystick.visible = false
-		right_joystick.visible = false
+		touch_controls.visible = false
 		action_button.visible = false
 
 func _connect_player() -> void:

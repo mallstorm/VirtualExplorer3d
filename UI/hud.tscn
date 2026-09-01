@@ -1,33 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://virtual_explorer_hud"]
+[gd_scene load_steps=7 format=3 uid="uid://virtual_explorer_hud"]
 
 [ext_resource type="Script" path="res://UI/hud.gd" id="1_hud"]
-[ext_resource type="Script" path="res://UI/touch_joystick.gd" id="2_joystick"]
-
-[sub_resource type="StyleBoxFlat" id="style_pad_base"]
-bg_color = Color(0.05, 0.06, 0.07, 0.42)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.65, 0.78, 0.95, 0.22)
-corner_radius_top_left = 96
-corner_radius_top_right = 96
-corner_radius_bottom_right = 96
-corner_radius_bottom_left = 96
-
-[sub_resource type="StyleBoxFlat" id="style_move_knob"]
-bg_color = Color(0.78, 0.88, 0.98, 0.72)
-corner_radius_top_left = 34
-corner_radius_top_right = 34
-corner_radius_bottom_right = 34
-corner_radius_bottom_left = 34
-
-[sub_resource type="StyleBoxFlat" id="style_look_knob"]
-bg_color = Color(0.3, 0.58, 1, 0.78)
-corner_radius_top_left = 34
-corner_radius_top_right = 34
-corner_radius_bottom_right = 34
-corner_radius_bottom_left = 34
+[ext_resource type="Script" path="res://UI/touch_screen_controls.gd" id="2_touch"]
 
 [sub_resource type="StyleBoxFlat" id="style_action"]
 bg_color = Color(0.1, 0.42, 1, 0.82)
@@ -68,20 +42,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopHint" type="Label" parent="Root"]
+[node name="TouchScreenControls" type="Control" parent="Root"]
+mouse_filter = 1
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -300.0
-offset_top = 18.0
-offset_right = 300.0
-offset_bottom = 54.0
-theme_override_font_sizes/font_size = 18
-text = "Левый шар - движение, правый шар - обзор 360"
-horizontal_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("2_touch")
+move_zone_ratio = 0.68
 
 [node name="CenterReticle" type="Panel" parent="Root"]
+mouse_filter = 2
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -95,6 +66,7 @@ offset_bottom = 4.0
 theme_override_styles/panel = SubResource("style_action")
 
 [node name="Hint" type="Label" parent="Root"]
+mouse_filter = 2
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -108,66 +80,6 @@ offset_bottom = 18.0
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 22
 
-[node name="LeftMoveJoystick" type="Control" parent="Root"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 0.0
-anchor_top = 1.0
-anchor_right = 0.0
-anchor_bottom = 1.0
-offset_left = 48.0
-offset_top = -214.0
-offset_right = 220.0
-offset_bottom = -42.0
-script = ExtResource("2_joystick")
-control_mode = "move"
-radius = 72.0
-
-[node name="Base" type="Panel" parent="Root/LeftMoveJoystick"]
-mouse_filter = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme_override_styles/panel = SubResource("style_pad_base")
-
-[node name="Knob" type="Panel" parent="Root/LeftMoveJoystick"]
-mouse_filter = 2
-layout_mode = 0
-offset_right = 62.0
-offset_bottom = 62.0
-theme_override_styles/panel = SubResource("style_move_knob")
-
-[node name="RightLookJoystick" type="Control" parent="Root"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -214.0
-offset_right = -48.0
-offset_bottom = -42.0
-script = ExtResource("2_joystick")
-control_mode = "look"
-radius = 72.0
-
-[node name="Base" type="Panel" parent="Root/RightLookJoystick"]
-mouse_filter = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme_override_styles/panel = SubResource("style_pad_base")
-
-[node name="Knob" type="Panel" parent="Root/RightLookJoystick"]
-mouse_filter = 2
-layout_mode = 0
-offset_right = 62.0
-offset_bottom = 62.0
-theme_override_styles/panel = SubResource("style_look_knob")
-
 [node name="ActionButton" type="Button" parent="Root"]
 disabled = true
 layout_mode = 1
@@ -177,9 +89,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -208.0
-offset_top = -286.0
+offset_top = -96.0
 offset_right = -60.0
-offset_bottom = -236.0
+offset_bottom = -46.0
 theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("style_action")
 theme_override_styles/pressed = SubResource("style_action_pressed")

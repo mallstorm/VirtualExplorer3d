@@ -13,6 +13,7 @@ const ACTION_KEYS := {
 
 var touch_move := Vector2.ZERO
 var touch_look := Vector2.ZERO
+var touch_look_delta := Vector2.ZERO
 var touch_interact_requested := false
 var gyro_enabled := false
 
@@ -48,10 +49,15 @@ func set_touch_look(value: Vector2) -> void:
 	touch_look = value.limit_length(1.0)
 
 func add_touch_look(value: Vector2) -> void:
-	touch_look += value
+	touch_look_delta += value
 
 func get_touch_look() -> Vector2:
 	return touch_look.limit_length(1.0)
+
+func consume_touch_look_delta() -> Vector2:
+	var value: Vector2 = touch_look_delta
+	touch_look_delta = Vector2.ZERO
+	return value
 
 func request_touch_interact() -> void:
 	touch_interact_requested = true

@@ -49,12 +49,19 @@ func _physics_process(delta: float) -> void:
 		velocity.y = -0.05
 
 	move_and_slide()
+	_apply_touch_drag_look()
 	_apply_touch_look(delta)
 	_apply_gyro(delta)
 
 func _apply_look(delta_pixels: Vector2) -> void:
 	rotate_y(-delta_pixels.x)
 	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x - delta_pixels.y, min_pitch, max_pitch)
+
+func _apply_touch_drag_look() -> void:
+	var drag: Vector2 = InputManager.consume_touch_look_delta()
+	if drag.length() < 0.001:
+		return
+	_apply_look(drag * touch_sensitivity)
 
 func _apply_touch_look(delta: float) -> void:
 	var look: Vector2 = InputManager.get_touch_look()
