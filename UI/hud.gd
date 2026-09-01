@@ -37,7 +37,7 @@ func _on_interaction_requested(data: Dictionary) -> void:
 	info_title.text = data.get("name", "Информация")
 	info_body.text = data.get("description", "")
 	info_panel.visible = true
-	var audio_path := data.get("audio", "")
+	var audio_path := str(data.get("audio", ""))
 	if not audio_path.is_empty():
 		AudioManager.play_narration(audio_path)
 
