@@ -1,0 +1,22 @@
+Virtual Explorer - validation report
+
+Дата: 2026-09-01
+
+Проверено:
+
+- JSON проекта `Projects/Chernobyl/project.json`: OK.
+- JSON объекта `Projects/Chernobyl/information/reactor_panel.json`: OK.
+- Количество файлов в исходниках: 49.
+- Размер исходного проекта: около 508 KB.
+- Панорама-заглушка создана: `Projects/Chernobyl/panoramas/reactor_placeholder_360.jpg`.
+- Размер панорамы: 4096x2048.
+- Звук объекта создан: `Projects/Chernobyl/audio/reactor_panel.wav`.
+- Фоновый звук создан: `Projects/Chernobyl/audio/reactor_room_ambience.wav`.
+- GitHub Actions workflow добавлен: `.github/workflows/build.yml`.
+- Godot export presets добавлены: `export_presets.cfg`.
+
+Ограничение проверки:
+
+- В текущей среде нет Godot CLI (`godot`/`godot4` не найден), поэтому локальный запуск сцены и экспорт APK/EXE не выполнялись.
+- Экспорт должен выполняться через GitHub Actions после загрузки проекта в репозиторий.
+

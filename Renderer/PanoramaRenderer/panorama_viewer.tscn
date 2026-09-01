@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://virtual_explorer_panorama_viewer"]
+
+[ext_resource type="Script" path="res://Renderer/PanoramaRenderer/panorama_renderer.gd" id="1_renderer"]
+
+[sub_resource type="SphereMesh" id="sphere_panorama"]
+radius = 60.0
+height = 120.0
+radial_segments = 96
+rings = 48
+
+[sub_resource type="StandardMaterial3D" id="mat_placeholder"]
+albedo_color = Color(0.18, 0.2, 0.22, 1)
+cull_mode = 1
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="mesh_hotspot"]
+size = Vector3(0.5, 0.5, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="mat_hotspot"]
+albedo_color = Color(0.1, 0.42, 1, 0.7)
+emission_enabled = true
+emission = Color(0.1, 0.42, 1, 1)
+emission_energy_multiplier = 1.5
+transparency = 1
+
+[sub_resource type="SphereShape3D" id="shape_hotspot"]
+radius = 0.65
+
+[node name="PanoramaViewer" type="Node3D"]
+script = ExtResource("1_renderer")
+
+[node name="PanoramaSphere" type="MeshInstance3D" parent="."]
+mesh = SubResource("sphere_panorama")
+material_override = SubResource("mat_placeholder")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+current = true
+fov = 82.0
+
+[node name="ReturnHotspot" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="ReturnHotspot"]
+mesh = SubResource("mesh_hotspot")
+material_override = SubResource("mat_hotspot")
+
+[node name="Collision" type="CollisionShape3D" parent="ReturnHotspot"]
+shape = SubResource("shape_hotspot")
+

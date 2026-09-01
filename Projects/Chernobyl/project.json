@@ -1,0 +1,80 @@
+{
+  "id": "chernobyl",
+  "name": "Chernobyl Sarcophagus Experience",
+  "version": "0.3",
+  "engine": "Virtual Explorer",
+  "type": "hybrid",
+  "start_scene": "reactor_block",
+  "android_min_api": 28,
+  "target_fps": 60,
+  "scenes": [
+    {
+      "id": "entrance_tunnel",
+      "name": "Входной тоннель",
+      "type": "3d",
+      "path": "res://Projects/Chernobyl/scenes/entrance_tunnel.tscn",
+      "status": "planned"
+    },
+    {
+      "id": "central_hall",
+      "name": "Центральный зал",
+      "type": "3d",
+      "path": "res://Projects/Chernobyl/scenes/central_hall.tscn",
+      "status": "planned"
+    },
+    {
+      "id": "reactor_block",
+      "name": "Реакторный блок",
+      "type": "hybrid",
+      "path": "res://Projects/Chernobyl/scenes/reactor_room.tscn",
+      "status": "implemented",
+      "spawn_points": [
+        {
+          "id": "start",
+          "position": [0, 0.12, 5.4],
+          "rotation": [0, 180, 0]
+        }
+      ],
+      "portals": [
+        {
+          "id": "reactor_360_portal",
+          "position": [3.2, 0.06, -5.6],
+          "target": "reactor_360"
+        }
+      ],
+      "objects": [
+        {
+          "id": "reactor_panel",
+          "name": "Пульт управления",
+          "description": "Пульт управления реактором РБМК",
+          "audio": "res://Projects/Chernobyl/audio/reactor_panel.wav",
+          "interaction": "info"
+        }
+      ],
+      "audio": {
+        "ambience": "res://Projects/Chernobyl/audio/reactor_room_ambience.wav"
+      }
+    },
+    {
+      "id": "control_room",
+      "name": "Пультовая",
+      "type": "3d",
+      "path": "res://Projects/Chernobyl/scenes/control_room.tscn",
+      "status": "planned"
+    },
+    {
+      "id": "technical_corridor",
+      "name": "Технический коридор",
+      "type": "3d",
+      "path": "res://Projects/Chernobyl/scenes/technical_corridor.tscn",
+      "status": "planned"
+    },
+    {
+      "id": "reactor_360",
+      "name": "Обзорная точка реакторного блока",
+      "type": "360",
+      "panorama": "res://Projects/Chernobyl/panoramas/reactor_placeholder_360.jpg",
+      "status": "implemented"
+    }
+  ]
+}

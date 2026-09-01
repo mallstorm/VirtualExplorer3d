@@ -1,0 +1,16 @@
+.godot/
+.import/
+android/build/
+build/
+dist/
+*.tmp
+*.log
+*.apk
+*.aab
+*.exe
+*.pck
+*.zip
+
+!Projects/**/README.md
+!Assets/**/README.md
+

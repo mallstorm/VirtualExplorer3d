@@ -1,0 +1,47 @@
+name: Build Virtual Explorer
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  export:
+    name: Godot export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Import project
+        run: godot --headless --path . --import
+
+      - name: Export Windows
+        run: |
+          mkdir -p build/windows
+          godot --headless --path . --export-release "Windows Desktop" build/windows/VirtualExplorer.exe
+
+      - name: Export Android debug
+        run: |
+          mkdir -p build/android
+          godot --headless --path . --export-debug "Android Debug" build/android/VirtualExplorer-debug.apk
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VirtualExplorer-Windows
+          path: build/windows/
+          retention-days: 14
+
+      - name: Upload Android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VirtualExplorer-Android-debug
+          path: build/android/
+          retention-days: 14
+

@@ -1,0 +1,37 @@
+; Engine configuration file.
+; Godot 4.x project.
+
+config_version=5
+
+[application]
+
+config/name="Virtual Explorer"
+config/description="Virtual Reality Explorer Engine for Android interactive spaces."
+run/main_scene="res://scenes/Main.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+
+[autoload]
+
+InputManager="*res://Core/InputManager/input_manager.gd"
+SceneManager="*res://Core/SceneManager/scene_manager.gd"
+SaveManager="*res://Core/SaveManager/save_manager.gd"
+AssetLoader="*res://Core/AssetLoader/asset_loader.gd"
+ProjectImporter="*res://Core/ProjectImporter/project_importer.gd"
+AudioManager="*res://Core/AudioManager/audio_manager.gd"
+VRCardboard="*res://Renderer/VR/vr_cardboard_controller.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/handheld/orientation=1
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+renderer/rendering_method.mobile="mobile"
+textures/vram_compression/import_etc2_astc=true
