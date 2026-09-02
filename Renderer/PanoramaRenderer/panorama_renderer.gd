@@ -6,13 +6,17 @@ extends Node3D
 @onready var sphere: MeshInstance3D = $PanoramaSphere
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera: Camera3D = $CameraPivot/Camera3D
+@onready var return_button: Button = $PanoramaHUD/Root/ReturnButton
+@onready var title_label: Label = $PanoramaHUD/Root/Title
 
 func _ready() -> void:
 	camera.current = true
-	var pending := SceneManager.consume_pending_panorama()
+	var pending: String = SceneManager.consume_pending_panorama()
 	if not pending.is_empty():
 		panorama_path = pending
 	load_panorama(panorama_path)
+	return_button.pressed.connect(_on_return_pressed)
+	title_label.text = "360 обзорная точка"
 	if OS.get_name() != "Android":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -22,7 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenDrag:
 		_apply_look(event.relative * look_sensitivity * 1.4)
 	if event.is_action_pressed("ui_cancel"):
-		SceneManager.go_to_scene("res://Projects/Chernobyl/scenes/reactor_room.tscn", "reactor_block")
+		_on_return_pressed()
 
 func load_panorama(path: String) -> void:
 	var material := StandardMaterial3D.new()
@@ -37,5 +41,7 @@ func load_panorama(path: String) -> void:
 
 func _apply_look(delta_pixels: Vector2) -> void:
 	camera_pivot.rotate_y(-delta_pixels.x)
-	camera.rotation.x = clamp(camera.rotation.x - delta_pixels.y, -1.35, 1.35)
+	camera.rotation.x = clamp(camera.rotation.x - delta_pixels.y, -1.52, 1.52)
 
+func _on_return_pressed() -> void:
+	SceneManager.return_from_panorama()

@@ -1,28 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://virtual_explorer_hud"]
+[gd_scene load_steps=10 format=3 uid="uid://virtual_explorer_hud"]
 
 [ext_resource type="Script" path="res://UI/hud.gd" id="1_hud"]
 [ext_resource type="Script" path="res://UI/touch_screen_controls.gd" id="2_touch"]
 
 [sub_resource type="StyleBoxFlat" id="style_action"]
 bg_color = Color(0.1, 0.42, 1, 0.82)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="style_action_pressed"]
 bg_color = Color(0.05, 0.28, 0.7, 0.9)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="style_action_disabled"]
 bg_color = Color(0.15, 0.16, 0.18, 0.45)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="style_panel"]
 bg_color = Color(0.03, 0.035, 0.04, 0.88)
@@ -30,6 +30,27 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="style_top"]
+bg_color = Color(0.02, 0.025, 0.03, 0.64)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="style_menu"]
+bg_color = Color(0.04, 0.05, 0.06, 0.92)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="style_reticle"]
+bg_color = Color(0.75, 0.9, 1, 0.86)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -51,6 +72,47 @@ anchor_bottom = 1.0
 script = ExtResource("2_touch")
 move_zone_ratio = 0.68
 
+[node name="ZoneLabel" type="Label" parent="Root"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 270.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("style_top")
+text = "Входной тоннель"
+
+[node name="ObjectiveLabel" type="Label" parent="Root"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 16.0
+offset_right = 300.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("style_top")
+text = "Цель: пройти к центральному залу"
+horizontal_alignment = 1
+
+[node name="MenuButton" type="Button" parent="Root"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -132.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("style_top")
+theme_override_styles/pressed = SubResource("style_action_pressed")
+text = "Меню"
+
 [node name="CenterReticle" type="Panel" parent="Root"]
 mouse_filter = 2
 layout_mode = 1
@@ -63,7 +125,7 @@ offset_left = -4.0
 offset_top = -4.0
 offset_right = 4.0
 offset_bottom = 4.0
-theme_override_styles/panel = SubResource("style_action")
+theme_override_styles/panel = SubResource("style_reticle")
 
 [node name="Hint" type="Label" parent="Root"]
 mouse_filter = 2
@@ -79,6 +141,22 @@ offset_right = 260.0
 offset_bottom = 18.0
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 22
+
+[node name="JournalButton" type="Button" parent="Root"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -208.0
+offset_top = -154.0
+offset_right = -60.0
+offset_bottom = -104.0
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("style_top")
+theme_override_styles/pressed = SubResource("style_action_pressed")
+text = "Журнал 0"
 
 [node name="ActionButton" type="Button" parent="Root"]
 disabled = true
@@ -106,10 +184,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -310.0
-offset_top = -125.0
-offset_right = 310.0
-offset_bottom = 125.0
+offset_left = -340.0
+offset_top = -150.0
+offset_right = 340.0
+offset_bottom = 150.0
 theme_override_styles/panel = SubResource("style_panel")
 
 [node name="Margin" type="MarginContainer" parent="Root/InformationPanel"]
@@ -131,6 +209,62 @@ layout_mode = 2
 autowrap_mode = 3
 
 [node name="Close" type="Button" parent="Root/InformationPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Закрыть"
+
+[node name="PausePanel" type="PanelContainer" parent="Root"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -170.0
+offset_right = 220.0
+offset_bottom = 170.0
+theme_override_styles/panel = SubResource("style_menu")
+
+[node name="Margin" type="MarginContainer" parent="Root/PausePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="Root/PausePanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Root/PausePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Virtual Explorer"
+horizontal_alignment = 1
+
+[node name="Resume" type="Button" parent="Root/PausePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Продолжить"
+
+[node name="Panorama" type="Button" parent="Root/PausePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Открыть 360"
+
+[node name="Restart" type="Button" parent="Root/PausePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Начать заново"
+
+[node name="Gyro" type="Button" parent="Root/PausePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Гироскоп: выкл"
+
+[node name="CloseMenu" type="Button" parent="Root/PausePanel/Margin/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Закрыть"

@@ -53,3 +53,8 @@ text = "Настройки"
 layout_mode = 2
 text = "О программе"
 
+[node name="Info" type="Label" parent="Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Демо-проект: Chernobyl Sarcophagus Experience"
+autowrap_mode = 3

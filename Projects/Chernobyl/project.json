@@ -1,7 +1,7 @@
 {
   "id": "chernobyl",
   "name": "Chernobyl Sarcophagus Experience",
-  "version": "0.5-visual-demo",
+  "version": "0.9-demo-package",
   "engine": "Virtual Explorer",
   "type": "hybrid",
   "start_scene": "reactor_block",

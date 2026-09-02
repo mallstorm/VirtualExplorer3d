@@ -7,6 +7,7 @@ const ACTION_KEYS := {
 	"move_right": [KEY_D, KEY_RIGHT],
 	"interact": [KEY_E, KEY_ENTER],
 	"ui_cancel": [KEY_ESCAPE],
+	"toggle_menu": [KEY_M, KEY_TAB],
 	"toggle_vr": [KEY_V],
 	"toggle_gyro": [KEY_G]
 }

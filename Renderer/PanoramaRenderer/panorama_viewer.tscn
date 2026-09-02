@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://virtual_explorer_panorama_viewer"]
+[gd_scene load_steps=9 format=3 uid="uid://virtual_explorer_panorama_viewer"]
 
 [ext_resource type="Script" path="res://Renderer/PanoramaRenderer/panorama_renderer.gd" id="1_renderer"]
 
@@ -26,6 +26,20 @@ transparency = 1
 [sub_resource type="SphereShape3D" id="shape_hotspot"]
 radius = 0.65
 
+[sub_resource type="StyleBoxFlat" id="style_button"]
+bg_color = Color(0.05, 0.07, 0.09, 0.82)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="style_button_pressed"]
+bg_color = Color(0.1, 0.42, 1, 0.86)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="PanoramaViewer" type="Node3D"]
 script = ExtResource("1_renderer")
 
@@ -49,3 +63,41 @@ material_override = SubResource("mat_hotspot")
 [node name="Collision" type="CollisionShape3D" parent="ReturnHotspot"]
 shape = SubResource("shape_hotspot")
 
+[node name="PanoramaHUD" type="CanvasLayer" parent="."]
+
+[node name="Root" type="Control" parent="PanoramaHUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="PanoramaHUD/Root"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 20.0
+offset_right = 260.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 20
+text = "360 обзорная точка"
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="PanoramaHUD/Root"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -190.0
+offset_top = -88.0
+offset_right = -48.0
+offset_bottom = -38.0
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("style_button")
+theme_override_styles/pressed = SubResource("style_button_pressed")
+text = "Назад"
