@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://virtual_explorer_tour_player"]
+
+[ext_resource type="PackedScene" path="res://Player/player.tscn" id="1_player"]
+[ext_resource type="Script" path="res://Renderer/GeneratedScene/generated_project_builder.gd" id="2_builder"]
+[ext_resource type="PackedScene" path="res://UI/hud.tscn" id="3_hud"]
+
+[node name="TourPlayer" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+
+[node name="GeneratedProjectBuilder" type="Node3D" parent="."]
+script = ExtResource("2_builder")
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]

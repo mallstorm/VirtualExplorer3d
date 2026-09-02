@@ -1,12 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://virtual_explorer_main"]
+[gd_scene load_steps=3 format=3 uid="uid://virtual_explorer_main"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_main"]
-[ext_resource type="PackedScene" path="res://Projects/Chernobyl/scenes/reactor_room.tscn" id="2_reactor"]
-[ext_resource type="PackedScene" path="res://UI/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://UI/main_menu.tscn" id="2_menu"]
 
 [node name="VirtualExplorer" type="Node"]
 script = ExtResource("1_main")
 
-[node name="ReactorRoom" parent="." instance=ExtResource("2_reactor")]
-
-[node name="HUD" parent="." instance=ExtResource("3_hud")]
+[node name="MainMenu" parent="." instance=ExtResource("2_menu")]

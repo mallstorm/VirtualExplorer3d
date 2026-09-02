@@ -18,6 +18,7 @@ extends CanvasLayer
 @onready var close_menu_button: Button = $Root/PausePanel/Margin/VBox/CloseMenu
 
 var player: Node = null
+var current_zone: Dictionary = {}
 
 func _ready() -> void:
 	info_panel.visible = false
@@ -99,11 +100,11 @@ func _on_resume_pressed() -> void:
 	pause_panel.visible = false
 
 func _on_panorama_pressed() -> void:
-	SceneManager.open_panorama("res://Projects/Chernobyl/panoramas/reactor_placeholder_360.jpg")
+	SceneManager.open_first_panorama()
 
 func _on_restart_pressed() -> void:
 	SaveManager.clear_journal()
-	SceneManager.go_to_scene("res://Projects/Chernobyl/scenes/reactor_room.tscn", "reactor_block")
+	SceneManager.restart_active_project()
 
 func _on_gyro_pressed() -> void:
 	InputManager.set_gyro_enabled(not InputManager.gyro_enabled)
@@ -116,31 +117,30 @@ func _update_route_labels() -> void:
 	if player == null:
 		return
 	var position: Vector3 = player.global_position
-	var zone: String = _zone_name_from_position(position)
-	zone_label.text = zone
-	objective_label.text = _objective_for_zone(zone)
+	current_zone = _zone_from_position(position)
+	zone_label.text = str(current_zone.get("name", SceneManager.get_project_display_name()))
+	objective_label.text = str(current_zone.get("objective", ""))
 
-func _zone_name_from_position(position: Vector3) -> String:
-	if position.z > 8.0:
-		return "Входной тоннель"
-	if position.x < -6.0:
-		return "Пультовая"
-	if position.x > 6.0:
-		return "Технический коридор"
-	if position.z < -1.0:
-		return "Реакторный блок"
-	return "Центральный зал"
+func _zone_from_position(position: Vector3) -> Dictionary:
+	var scene_value: Variant = SceneManager.project_data.get("tour_scene", {})
+	if not scene_value is Dictionary:
+		return {}
+	var scene_data: Dictionary = scene_value as Dictionary
+	var zones_value: Variant = scene_data.get("zones", [])
+	if not zones_value is Array:
+		return {}
+	for item in zones_value:
+		if not item is Dictionary:
+			continue
+		var item_data: Dictionary = item as Dictionary
+		var center := _vec3(item_data.get("position", [0, 0, 0]), Vector3.ZERO)
+		var size := _vec3(item_data.get("size", [1, 1, 1]), Vector3.ONE)
+		var half := size * 0.5
+		if position.x >= center.x - half.x and position.x <= center.x + half.x and position.z >= center.z - half.z and position.z <= center.z + half.z:
+			return item_data
+	return {}
 
-func _objective_for_zone(zone: String) -> String:
-	match zone:
-		"Входной тоннель":
-			return "Цель: пройти к центральному залу"
-		"Центральный зал":
-			return "Цель: осмотреть реакторный блок"
-		"Реакторный блок":
-			return "Цель: найти пультовую и 360-портал"
-		"Пультовая":
-			return "Цель: осмотреть пульт управления"
-		"Технический коридор":
-			return "Цель: проверить аварийную дверь"
-	return ""
+func _vec3(value: Variant, fallback: Vector3) -> Vector3:
+	if value is Array and value.size() >= 3:
+		return Vector3(float(value[0]), float(value[1]), float(value[2]))
+	return fallback

@@ -3,7 +3,8 @@ extends Node
 const SAVE_PATH := "user://virtual_explorer_save.json"
 
 var state := {
-	"last_project": "Chernobyl",
+	"last_project": "",
+	"selected_project_path": "",
 	"last_scene": "reactor_block",
 	"spawn_id": "start",
 	"journal": []
@@ -19,7 +20,7 @@ func load_state() -> Dictionary:
 		return state
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(SAVE_PATH))
 	if typeof(parsed) == TYPE_DICTIONARY:
-		state = parsed
+		state = parsed as Dictionary
 	return state
 
 func set_position(project_id: String, scene_id: String, spawn_id: String) -> void:
@@ -27,6 +28,13 @@ func set_position(project_id: String, scene_id: String, spawn_id: String) -> voi
 	state["last_scene"] = scene_id
 	state["spawn_id"] = spawn_id
 	save_state()
+
+func set_selected_project(project_json_path: String) -> void:
+	state["selected_project_path"] = project_json_path
+	save_state()
+
+func get_selected_project() -> String:
+	return str(state.get("selected_project_path", ""))
 
 func add_journal_entry(data: Dictionary) -> void:
 	var object_id: String = str(data.get("id", ""))

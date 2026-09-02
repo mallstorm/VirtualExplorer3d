@@ -35,7 +35,21 @@ func stop_all() -> void:
 		narration_player.stop()
 
 func _load_stream(path: String) -> AudioStream:
-	if path.is_empty() or not ResourceLoader.exists(path):
+	if path.is_empty():
 		return null
-	return load(path) as AudioStream
+	if cache_has_resource(path):
+		return load(path) as AudioStream
+	if not FileAccess.file_exists(path):
+		return null
+	var extension := path.get_extension().to_lower()
+	match extension:
+		"mp3":
+			return AudioStreamMP3.load_from_file(path)
+		"ogg":
+			return AudioStreamOggVorbis.load_from_file(path)
+		"wav":
+			return AudioStreamWAV.load_from_file(path)
+	return null
 
+func cache_has_resource(path: String) -> bool:
+	return ResourceLoader.exists(path)

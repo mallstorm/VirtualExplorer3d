@@ -1,0 +1,105 @@
+{
+  "id": "chernobyl_sarcophagus",
+  "name": "Chernobyl Sarcophagus Experience",
+  "version": "1.0-content-demo",
+  "engine": "Virtual Explorer",
+  "package_format": 1,
+  "type": "hybrid",
+  "start_scene": "reactor_block",
+  "android_min_api": 28,
+  "target_fps": 60,
+  "audio": {
+    "ambience": ""
+  },
+  "panoramas": [
+    {
+      "id": "reactor_360",
+      "name": "Обзорная точка реакторного блока",
+      "path": "panoramas/reactor_placeholder_360.jpg"
+    }
+  ],
+  "tour_scene": {
+    "spawn": {
+      "position": [0, 0.12, 15.6],
+      "rotation": [0, 180, 0]
+    },
+    "environment": {
+      "background": [0.025, 0.028, 0.026, 1],
+      "ambient_color": [0.22, 0.24, 0.22, 1],
+      "ambient_energy": 0.22
+    },
+    "zones": [
+      {"id": "entrance_tunnel", "name": "Входной тоннель", "objective": "Цель: пройти к центральному залу", "position": [0, 0, 13], "size": [3.4, 0.22, 10], "material": "floor"},
+      {"id": "central_hall", "name": "Центральный зал", "objective": "Цель: осмотреть реакторный блок", "position": [0, 0, 4], "size": [10.5, 0.22, 8], "material": "floor"},
+      {"id": "reactor_block", "name": "Реакторный блок", "objective": "Цель: найти пультовую и 360-портал", "position": [0, 0, -4.6], "size": [12, 0.22, 9.2], "material": "floor"},
+      {"id": "control_room", "name": "Пультовая", "objective": "Цель: осмотреть пульт управления", "position": [-10.2, 0, -2.2], "size": [7.2, 0.22, 5.4], "material": "floor"},
+      {"id": "technical_corridor", "name": "Технический коридор", "objective": "Цель: проверить аварийную дверь", "position": [8.4, 0, -1.6], "size": [4, 0.22, 12], "material": "floor"}
+    ],
+    "boxes": [
+      {"name": "EntranceLeftWall", "position": [-1.82, 1.7, 13], "size": [0.28, 3.4, 10], "material": "wall"},
+      {"name": "EntranceRightWall", "position": [1.82, 1.7, 13], "size": [0.28, 3.4, 10], "material": "wall"},
+      {"name": "EntranceGate", "position": [0, 1.7, 18.05], "size": [3.7, 3.4, 0.28], "material": "dark"},
+      {"name": "HallLeftWall", "position": [-5.38, 1.85, 4], "size": [0.3, 3.7, 8.2], "material": "wall"},
+      {"name": "HallRightWall", "position": [5.38, 1.85, 4], "size": [0.3, 3.7, 8.2], "material": "wall"},
+      {"name": "HallRearWallA", "position": [-3.7, 1.85, 8.15], "size": [3.4, 3.7, 0.3], "material": "wall"},
+      {"name": "HallRearWallB", "position": [3.7, 1.85, 8.15], "size": [3.4, 3.7, 0.3], "material": "wall"},
+      {"name": "ReactorLeftWallA", "position": [-6.15, 1.9, -6], "size": [0.3, 3.8, 6.2], "material": "wall"},
+      {"name": "ReactorLeftWallB", "position": [-6.15, 1.9, -0.1], "size": [0.3, 3.8, 2], "material": "wall"},
+      {"name": "ReactorRightWallA", "position": [6.15, 1.9, -6.4], "size": [0.3, 3.8, 5.4], "material": "wall"},
+      {"name": "ReactorRightWallB", "position": [6.15, 1.9, 0.4], "size": [0.3, 3.8, 1.2], "material": "wall"},
+      {"name": "ReactorBackWall", "position": [0, 1.9, -9.35], "size": [12.3, 3.8, 0.3], "material": "wall"},
+      {"name": "ControlOuterWall", "position": [-13.95, 1.7, -2.2], "size": [0.3, 3.4, 5.7], "material": "wall"},
+      {"name": "ControlBackWall", "position": [-10.2, 1.7, -5.05], "size": [7.5, 3.4, 0.3], "material": "wall"},
+      {"name": "ControlFrontWall", "position": [-10.2, 1.7, 0.65], "size": [7.5, 3.4, 0.3], "material": "wall"},
+      {"name": "CorridorOuterWall", "position": [10.55, 1.75, -1.6], "size": [0.3, 3.5, 12.4], "material": "wall"},
+      {"name": "CorridorBackWall", "position": [8.4, 1.75, -7.85], "size": [4.3, 3.5, 0.3], "material": "wall"},
+      {"name": "CorridorFrontWall", "position": [8.4, 1.75, 4.65], "size": [4.3, 3.5, 0.3], "material": "wall"},
+      {"name": "CentralCeiling", "position": [0, 3.7, 2], "size": [10.5, 0.22, 12.4], "material": "dark"},
+      {"name": "ReactorCeiling", "position": [0, 4.25, -5], "size": [12, 0.25, 8.6], "material": "dark"},
+      {"name": "SideCeiling", "position": [-10.2, 3.45, -2.2], "size": [7.2, 0.22, 5.4], "material": "dark"},
+      {"name": "CorridorCeiling", "position": [8.4, 3.5, -1.6], "size": [4, 0.22, 12], "material": "dark"},
+      {"name": "ReactorCoreBase", "position": [0, 0.45, -5.8], "size": [3.4, 0.9, 2.8], "material": "metal"},
+      {"name": "ReactorCoreTop", "position": [0, 1.35, -5.8], "size": [2.5, 0.9, 2], "material": "rust"},
+      {"name": "ControlDesk", "position": [-10.5, 0.55, -2], "size": [4.6, 1.1, 1], "material": "metal"},
+      {"name": "CorridorCableRack", "position": [8.9, 1.65, -2.1], "size": [0.35, 2, 8.4], "material": "metal"},
+      {"name": "EmergencyDoor", "position": [8.4, 1.2, -7.68], "size": [2.4, 2.4, 0.12], "material": "hazard"}
+    ],
+    "visual_boxes": [
+      {"name": "CenterLineA", "position": [0, 0.125, 15], "size": [0.12, 0.025, 1.1], "material": "white"},
+      {"name": "CenterLineB", "position": [0, 0.125, 10.6], "size": [0.12, 0.025, 1.1], "material": "white"},
+      {"name": "CenterLineC", "position": [0, 0.125, 4.8], "size": [0.12, 0.025, 1.1], "material": "white"},
+      {"name": "CenterLineD", "position": [0, 0.125, -1], "size": [0.12, 0.025, 1.1], "material": "white"},
+      {"name": "ReactorWarningLineA", "position": [-3.4, 0.13, -5.8], "size": [0.14, 0.025, 4.4], "material": "hazard"},
+      {"name": "ReactorWarningLineB", "position": [3.4, 0.13, -5.8], "size": [0.14, 0.025, 4.4], "material": "hazard"},
+      {"name": "WallStainReactor", "position": [0.8, 2.4, -9.17], "size": [2.6, 1.1, 0.035], "material": "stain"},
+      {"name": "ExitSign", "position": [8.4, 2.62, -7.52], "size": [1.7, 0.12, 0.42], "material": "exit"},
+      {"name": "CentralDustHaze", "position": [0, 2.7, 1], "size": [9.8, 0.04, 8], "material": "dust"},
+      {"name": "ReactorDustHaze", "position": [0, 3, -5.8], "size": [10.2, 0.04, 6.4], "material": "dust"}
+    ],
+    "labels": [
+      {"text": "SIGN A-01 / ВХОД", "position": [0, 2.4, 17.88], "rotation": [0, 180, 0], "color": [0.85, 0.9, 0.82, 1], "pixel_size": 0.022},
+      {"text": "ЦЕНТРАЛЬНЫЙ ЗАЛ", "position": [-5.22, 2.15, 4], "rotation": [0, 90, 0], "color": [0.82, 0.86, 0.78, 1], "pixel_size": 0.022},
+      {"text": "РЕАКТОРНЫЙ БЛОК N4", "position": [0, 2.6, -9.18], "rotation": [0, 0, 0], "color": [1, 0.74, 0.28, 1], "pixel_size": 0.022},
+      {"text": "ПУЛЬТОВАЯ", "position": [-13.78, 2.15, -2.2], "rotation": [0, 90, 0], "color": [0.78, 0.88, 1, 1], "pixel_size": 0.022},
+      {"text": "ТЕХНИЧЕСКИЙ КОРИДОР", "position": [10.38, 2.12, -1.6], "rotation": [0, -90, 0], "color": [0.82, 0.86, 0.78, 1], "pixel_size": 0.022},
+      {"text": "EXIT", "position": [8.4, 2.65, -7.44], "rotation": [0, 0, 0], "color": [0.8, 1, 0.86, 1], "pixel_size": 0.026}
+    ],
+    "interactables": [
+      {"id": "entrance_checkpoint", "name": "Входной тоннель", "description": "Стартовая зона маршрута. Отсюда пользователь проходит внутрь саркофага к центральному залу и реакторному блоку.", "position": [-1.45, 1.15, 15.8], "size": [0.25, 1, 1.2], "material": "sign"},
+      {"id": "reactor_panel", "name": "Пульт управления", "description": "Пультовая зона реакторного блока. Можно подойти, навести прицел и открыть описание.", "position": [-10.5, 1.05, -2.1], "size": [2.1, 0.8, 0.45], "material": "blue"},
+      {"id": "reactor_core", "name": "Реакторный блок", "description": "Центральная зона демонстрации с условным защитным массивом и техническим оборудованием.", "position": [0, 1.1, -5.8], "size": [1.8, 1.2, 1.2], "material": "hazard"},
+      {"id": "technical_corridor", "name": "Технический коридор", "description": "Служебный проход с кабельными трассами. Позже сюда можно добавить отдельную сцену и звук вентиляции.", "position": [8.65, 1.1, -2], "size": [0.75, 1.3, 1.4], "material": "metal"},
+      {"id": "emergency_exit", "name": "Аварийная дверь", "description": "Маркер будущего перехода в отдельную сцену технического коридора.", "position": [8.4, 1.2, -7.45], "size": [1.7, 1.6, 0.2], "material": "exit"}
+    ],
+    "portals": [
+      {"name": "PanoramaPortal", "position": [3.7, 0.1, -7.1], "panorama": "panoramas/reactor_placeholder_360.jpg", "material": "blue", "radius": 0.9, "trigger_radius": 1.0}
+    ],
+    "lights": [
+      {"type": "directional", "name": "DustyTopLight", "rotation": [-58, -32, 0], "energy": 0.45},
+      {"type": "omni", "name": "EntranceEmergencyLight", "position": [-1, 2.8, 12], "color": [1, 0.62, 0.35, 1], "energy": 1.45, "range": 7.5},
+      {"type": "omni", "name": "HallEmergencyLight", "position": [2.5, 3, 3.2], "color": [1, 0.62, 0.35, 1], "energy": 1.45, "range": 7.5},
+      {"type": "omni", "name": "ReactorEmergencyLight", "position": [-4.4, 2.8, -4.6], "color": [1, 0.62, 0.35, 1], "energy": 1.45, "range": 7.5},
+      {"type": "omni", "name": "ControlEmergencyLight", "position": [-11.8, 2.4, -2], "color": [1, 0.62, 0.35, 1], "energy": 1.45, "range": 7.5}
+    ]
+  }
+}

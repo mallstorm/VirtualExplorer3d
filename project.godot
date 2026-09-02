@@ -7,6 +7,7 @@ config_version=5
 
 config/name="Virtual Explorer"
 config/description="Virtual Reality Explorer Engine for Android interactive spaces."
+config/version="1.0-external-content"
 run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 

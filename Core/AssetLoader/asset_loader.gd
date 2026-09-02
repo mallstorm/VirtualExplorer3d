@@ -15,9 +15,14 @@ func load_scene(path: String) -> PackedScene:
 func load_texture(path: String) -> Texture2D:
 	if cache.has(path):
 		return cache[path]
-	if not ResourceLoader.exists(path):
+	var texture: Texture2D = null
+	if ResourceLoader.exists(path):
+		texture = load(path) as Texture2D
+	elif FileAccess.file_exists(path):
+		var image := Image.new()
+		if image.load(path) == OK:
+			texture = ImageTexture.create_from_image(image)
+	if texture == null:
 		return null
-	var texture := load(path) as Texture2D
 	cache[path] = texture
 	return texture
-
