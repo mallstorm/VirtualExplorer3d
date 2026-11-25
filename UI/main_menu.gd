@@ -17,7 +17,13 @@ func _ready() -> void:
 	import_button.pressed.connect(_on_import_pressed)
 	settings_button.pressed.connect(_on_settings_pressed)
 	about_button.pressed.connect(_on_about_pressed)
+	$Panel/Margin/VBox/PanoramaDemo.pressed.connect(_on_panorama_demo_pressed)
 	_refresh_projects()
+
+func _on_panorama_demo_pressed() -> void:
+	var result := get_tree().change_scene_to_file("res://Renderer/PanoramaRenderer/mountain_lake_demo.tscn")
+	if result != OK:
+		info_label.text = "Не удалось открыть встроенную панораму."
 
 func _refresh_projects() -> void:
 	SaveManager.load_state()

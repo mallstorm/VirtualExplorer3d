@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Renderer/PanoramaRenderer/panorama_viewer.tscn" id="1_viewer"]
+
+[node name="MountainLakeDemo" instance=ExtResource("1_viewer")]
+built_in_demo = true
